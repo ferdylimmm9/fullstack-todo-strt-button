@@ -43,7 +43,7 @@ export default function TaskView() {
           onClick={() => {
             replace("/");
           }}
-          className="px-0 py-0"
+          className="[&&]:px-0 [&&]:py-0"
         >
           <BiChevronLeft className="w-6 h-6" />
           <Text variant="subheadingMedium">Task Detail</Text>

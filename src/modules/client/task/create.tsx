@@ -25,7 +25,7 @@ export default function TaskCreate() {
           onClick={() => {
             replace("/");
           }}
-          className="px-0 py-0"
+          className="[&&]:px-0 [&&]:py-0"
         >
           <BiChevronLeft className="w-6 h-6" />
           <Text variant="subheadingMedium">Create Task</Text>
