@@ -1,12 +1,12 @@
 # Task Management App
 
 A full-stack task management application built with Next.js, Prisma, and various modern web technologies. This app allows users to register, log in, manage tasks, and perform operations like creating, updating, and deleting tasks.
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00001.png)
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00002.png)
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00003.png)
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00004.png)
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00005.png)
-![Alt Text](https://fullstack-todo-strt-button.vercel.app//preview-00006.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00001.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00002.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00003.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00004.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00005.png)
+![Alt Text](https://fullstack-todo-strt-button.vercel.app/preview/preview-00006.png)
 ---
 
 ## Tech Stack
