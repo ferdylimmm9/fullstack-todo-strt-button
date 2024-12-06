@@ -1,7 +1,6 @@
 import InfiniteScrollTasks from "./components/infinite-scroll-tasks";
 import { GetTasksParamsType, useGetTasks } from "@/api-hooks/task";
 import React from "react";
-import useToast from "@/hooks/use-toast";
 import FetchWrapper from "@/components/wrapper/fetch-wrapper";
 import TaskCard from "./components/card";
 import TaskCardLoader from "./components/card-loader";
@@ -11,22 +10,19 @@ import { Prisma, TaskStatus } from "@prisma/client";
 
 import { FaPlus } from "react-icons/fa";
 import ButtonLink from "@/components/button-link";
+import { useGetMe } from "@/api-hooks/auth";
 
 export default function TaskList() {
+  const { data } = useGetMe();
   const { query: queryParams, isReady, replace } = useRouter();
   const [params, setParams] = React.useState<GetTasksParamsType>({
     created_at: "desc",
     status: undefined,
   });
   const query = useGetTasks(params);
-  const toastRef = useToast();
   const firstTime = React.useRef(false);
 
-  React.useEffect(() => {
-    if (query.error) {
-      toastRef.current?.show("error", query.error.message);
-    }
-  }, [query.error, toastRef]);
+  const meData = data?.data;
 
   React.useEffect(() => {
     if (!isReady) return;
@@ -100,14 +96,16 @@ export default function TaskList() {
             );
           }}
         </FetchWrapper>
-        <ButtonLink
-          variant="primary"
-          className="fixed bottom-4 right-4 z-50"
-          leftSection={<FaPlus className="w-5 h-5" />}
-          href="/tasks/create"
-        >
-          Create Task
-        </ButtonLink>
+        {meData && (
+          <ButtonLink
+            variant="primary"
+            className="fixed bottom-4 right-4 z-50"
+            leftSection={<FaPlus className="w-5 h-5" />}
+            href="/tasks/create"
+          >
+            Create Task
+          </ButtonLink>
+        )}
       </div>
     </div>
   );

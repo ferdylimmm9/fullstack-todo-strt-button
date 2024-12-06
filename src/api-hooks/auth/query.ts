@@ -15,5 +15,6 @@ export function useGetMe(
     queryKey: authKey.me,
     queryFn: async () =>
       (await httpClient.get(`/auth/me`)).data as GetMeResponseType,
+    staleTime: Infinity,
   });
 }
