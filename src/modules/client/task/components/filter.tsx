@@ -72,39 +72,45 @@ export default function TaskFilter(props: TaskFilterProps) {
       {/* Sort and Status Filters in Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Sort by CreatedAt */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-start sm:items-center flex-col sm:flex-row gap-2">
           <label htmlFor="sort" className="text-sm font-medium">
             Sort by Created
           </label>
-          {sortOptions.map((option) => (
-            <Button
-              className="flex-1"
-              variant={option.value === sortOrder ? "primary" : "secondary"}
-              key={option.value}
-              onClick={() => onSortChange(option.value)}
-              leftSection={option.icon}
-            >
-              <span className="ml-1">{option.label}</span>
-            </Button>
-          ))}
+          <div className="flex flex-1 gap-2 w-full">
+            {sortOptions.map((option) => (
+              <Button
+                className="flex-1 px-2 py-1"
+                variant={option.value === sortOrder ? "primary" : "secondary"}
+                key={option.value}
+                onClick={() => onSortChange(option.value)}
+                leftSection={option.icon}
+              >
+                <span className="ml-1">{option.label}</span>
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Filter by Status */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-start sm:items-center flex-col sm:flex-row gap-2">
           <label htmlFor="status" className="text-sm font-medium">
             Filter by Status
           </label>
-          {statusOptions.map((option) => (
-            <Button
-              className="flex-1"
-              key={option.value}
-              variant={statusFilter === option.value ? "primary" : "secondary"}
-              onClick={() => onStatusChange(option.value)}
-              leftSection={option.icon}
-            >
-              <span className="ml-1">{option.label}</span>
-            </Button>
-          ))}
+          <div className="flex flex-1 gap-2 w-full">
+            {statusOptions.map((option) => (
+              <Button
+                className="flex-1 px-2 py-1"
+                key={option.value}
+                variant={
+                  statusFilter === option.value ? "primary" : "secondary"
+                }
+                onClick={() => onStatusChange(option.value)}
+                leftSection={option.icon}
+              >
+                <span className="ml-1">{option.label}</span>
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
