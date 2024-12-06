@@ -34,9 +34,9 @@ export const getTasks = async (userId: string, req: NextApiRequest) => {
 
   // sort
   let createdAt: Prisma.SortOrder | undefined = undefined;
-  if (req.query.createdAt === "asc") {
+  if (req.query.created_at === "asc") {
     createdAt = Prisma.SortOrder.asc;
-  } else if (req.query.createdAt === "desc") {
+  } else if (req.query.created_at === "desc") {
     createdAt = Prisma.SortOrder.desc;
   }
 
@@ -86,11 +86,11 @@ export const getTask = async (id: string, userId: string) => {
       id,
     },
   });
-  if (task?.userId !== userId) {
-    throw new Error("Forbidden");
-  }
   if (task === null) {
     throw new Error("Task not found");
+  }
+  if (task?.userId !== userId) {
+    throw new Error("Forbidden");
   }
 
   return task;

@@ -15,7 +15,7 @@ export const createUserAccount = async (params: SignUpParamsType) => {
   if (existUser) {
     throw new Error("An user with this email already exists.");
   }
-  const password = await hash("secret123", salt);
+  const password = await hash("secret123", parseInt(salt));
   const newUser = await prisma.user.create({
     data: {
       email: params.email,
@@ -45,7 +45,7 @@ export const signInUserAccount = async (params: SignInParamsType) => {
     throw new Error("Invalid password");
   }
 
-  const token = sign(user, salt, {
+  const token = sign({ ...user, password: undefined }, salt, {
     expiresIn: "30d",
   });
 

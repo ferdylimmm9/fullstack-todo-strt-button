@@ -22,8 +22,9 @@ export default async function handler(
 const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   const params = signInScheama.parse(req.body);
   const user = await signInUserAccount(params);
-  res.status(201).json({
+  const response = {
     data: user,
     message: "Sign in success",
-  });
+  }
+  res.status(201).json(response);
 };

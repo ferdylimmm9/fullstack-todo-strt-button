@@ -21,8 +21,9 @@ export default async function handler(
 
 const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await getCurrentUser(req);
-  res.status(201).json({
+  const response = {
     data: user,
     message: "Me show success",
-  });
+  }
+  res.status(201).json(response);
 };

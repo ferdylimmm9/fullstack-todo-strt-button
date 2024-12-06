@@ -1,4 +1,9 @@
-import { CookieValueTypes, getCookie, setCookie } from "cookies-next";
+import {
+  CookieValueTypes,
+  getCookie,
+  setCookie,
+  deleteCookie,
+} from "cookies-next";
 
 export class AuthToken {
   static readonly key = "auth_token";
@@ -9,5 +14,8 @@ export class AuthToken {
     // 29 days
     setCookie(AuthToken.key, token, { maxAge: 60 * 60 * 24 * 29 });
     return token;
+  }
+  static remove() {
+    deleteCookie(AuthToken.key);
   }
 }

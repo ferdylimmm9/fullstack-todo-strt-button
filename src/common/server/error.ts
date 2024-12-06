@@ -14,13 +14,31 @@ export const getExceptionMessage = (error: unknown) => {
   return "An unknown error occurred";
 };
 
-export const getExceptionStatusCode = (error: unknown) => {
+export const getExceptionStatusCode = (error: any) => {
   if (error instanceof ZodError) {
     return 400;
   }
 
   if (error instanceof ApiError) {
     return error.statusCode;
+  }
+
+  const message = error?.message?.toLowerCase?.();
+
+  if (message?.includes("jwt must be provided")) {
+    return 401;
+  }
+
+  if (message?.includes("unauthorized")) {
+    return 401;
+  }
+
+  if (message?.includes("forbidden")) {
+    return 403;
+  }
+
+  if (message?.includes("not found")) {
+    return 404;
   }
 
   return 500;
@@ -40,7 +58,7 @@ export const sendApiError = (res: NextApiResponse, error: unknown) => {
 
 export const throwMethodNotAllowed = (
   res: NextApiResponse,
-  method: string | undefined,
+  method: string | undefined
 ) => {
   throw new Error(`Method ${method} Not Allowed`);
 };

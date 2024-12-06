@@ -22,8 +22,9 @@ export default async function handler(
 const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   const params = signUpSchema.parse(req.body);
   const user = await createUserAccount(params);
-  res.status(201).json({
+  const response = {
     data: user,
     message: "Sign up success",
-  });
+  };
+  res.status(201).json(response);
 };

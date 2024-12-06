@@ -1,11 +1,7 @@
 import { getCurrentUser } from "@/common/server/auth";
 import { sendApiError, throwMethodNotAllowed } from "@/common/server/error";
 import { updateTaskSchema } from "@/modules/server/tasks";
-import {
-  deleteTask,
-  getTask,
-  updateTask,
-} from "@/modules/server/tasks/server";
+import { deleteTask, getTask, updateTask } from "@/modules/server/tasks/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -33,21 +29,30 @@ export default async function handler(
 
 const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await getCurrentUser(req);
-  const response = await getTask(req.query.id as string, user.id);
-  res.status(201).json({
-    data: response,
+  const result = await getTask(req.query.id as string, user.id);
+  const response = {
+    data: result,
     message: "Task show success",
-  });
+  };
+  res.status(201).json(response);
 };
 
 const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   const params = await updateTaskSchema.parse(req.body);
+  if (
+    params.description === undefined &&
+    params.name === undefined &&
+    params.status === undefined
+  ) {
+    throw new Error("No data to update");
+  }
   const user = await getCurrentUser(req);
-  const response = await updateTask(req.query.id as string, user.id, params);
-  res.status(201).json({
-    data: response,
+  const result = await updateTask(req.query.id as string, user.id, params);
+  const response = {
+    data: result,
     message: "Task update success",
-  });
+  };
+  res.status(201).json(response);
 };
 
 const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {

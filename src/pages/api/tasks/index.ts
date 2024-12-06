@@ -25,18 +25,21 @@ export default async function handler(
   }
 }
 
+
 const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await getCurrentUser(req);
-  const response = await getTasks(user.id, req);
-  res.status(201).json({ ...response, message: "Task list success" });
+  const result = await getTasks(user.id, req);
+  const response = { ...result, message: "Task list success"}
+  res.status(201).json(response);
 };
 
 const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   const params = createTaskSchema.parse(req.body);
   const user = await getCurrentUser(req);
-  const response = await createTask(user.id, params);
-  res.status(201).json({
-    data: response,
+  const result = await createTask(user.id, params);
+  const response = {
+    data: result,
     message: "Task create success",
-  });
+  }
+  res.status(201).json(response);
 };
