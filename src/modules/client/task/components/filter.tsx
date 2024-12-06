@@ -79,7 +79,7 @@ export default function TaskFilter(props: TaskFilterProps) {
           <div className="flex flex-1 gap-2 w-full">
             {sortOptions.map((option) => (
               <Button
-                className="flex-1 px-2 py-1"
+                className="flex-1 [&&]:px-2 [&&]:py-1"
                 variant={option.value === sortOrder ? "primary" : "secondary"}
                 key={option.value}
                 onClick={() => onSortChange(option.value)}
@@ -99,7 +99,7 @@ export default function TaskFilter(props: TaskFilterProps) {
           <div className="flex flex-1 gap-2 w-full">
             {statusOptions.map((option) => (
               <Button
-                className="flex-1 px-2 py-1"
+                className="flex-1 [&&]:px-2 [&&]:py-1"
                 key={option.value}
                 variant={
                   statusFilter === option.value ? "primary" : "secondary"
