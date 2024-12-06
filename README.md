@@ -1,40 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Task Management App
 
-## Getting Started
+A full-stack task management application built with Next.js, Prisma, and various modern web technologies. This app allows users to register, log in, manage tasks, and perform operations like creating, updating, and deleting tasks.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend:**
+  - **Next.js**: React framework for building the application with server-side rendering (SSR) and static site generation (SSG).
+  - **Axios**: HTTP client to make API requests.
+  - **React Query**: Network state management and data fetching for frontend.
+  - **Tailwind CSS**: Utility-first CSS framework for styling components.
+  - **TypeScript**: Type safety for the entire project.
+  
+- **Backend:**
+  - **Prisma**: ORM for interacting with the database.
+  - **bcrypt**: For hashing user passwords.
+  - **JWT (JSON Web Tokens)**: For authentication and session management.
+  - **Zod**: Data validation library used for validating incoming requests and data.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Features
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Backend API
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **GET** `/api/auth/me`  
+   - Get current user information.
+   - **Response:** User object with details (e.g., name, email).
 
-## Learn More
+2. **POST** `/api/auth/sign-in`  
+   - Sign in and get a session token.
+   - **Body:** `{ "email": "admin@admin.com", "password": "secret123" }`
+   - **Response:** `{ "token": "JWT_TOKEN" }`
 
-To learn more about Next.js, take a look at the following resources:
+3. **POST** `/api/auth/sign-up`  
+   - Register a new user.
+   - **Body:**
+    ```json
+     {
+       "name": "admin",
+       "email": "Task Description",
+       "password": "Task Description",
+       "passwordConfirmation": "Task Description"
+     }
+     ```
+   - **Response:** `{ "message": "User successfully registered" }`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+4. **GET** `/api/tasks`  
+   - Get tasks by current user with support for pagination, filtering, and sorting.
+   - **Query Params:**
+     - `page` (number, optional) - Page number for pagination.
+     - `limit` (number, optional) - Number of tasks per page, `-1` means get all tasks.
+     - `created_at` (string, optional) - Sorting by creation date (`asc` or `desc`).
+     - `status` (string, optional) - Filter by task status (`pending` or `completed`).
+   - **Response:** List of tasks.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. **GET** `/api/tasks/[id]`  
+   - Get detailed information about a specific task.
+   - **Response:** Task object.
 
-## Deploy on Vercel
+6. **POST** `/api/tasks`  
+   - Create a new task.
+   - **Body:** 
+     ```json
+     {
+       "name": "Task Name",
+       "description": "Task Description",
+       "status": "pending"
+     }
+     ```
+   - **Response:** Created task object.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+7. **PUT** `/api/tasks/[id]`  
+   - Update an existing task by ID.
+   - **Body:** 
+     ```json
+     {
+       "name": "Updated Task Name",
+       "description": "Updated Task Description",
+       "status": "completed"
+     }
+     ```
+   - **Response:** Updated task object.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+8. **DELETE** `/api/tasks/[id]`  
+   - Delete a task by ID.
+   - **Response:** Message indicating success.
+
+### Backend Features
+
+- **User-based Resource Limitation:** Tasks can only be modified or deleted by the user who created them. Unauthorized access results in a **403 Forbidden** error.
+- **Pagination:** API supports pagination for retrieving task lists efficiently. 
+- **Filtering:** Tasks can be filtered by their `status` (pending/completed).
+- **Sorting:** Tasks can be sorted by `created_at` date in ascending or descending order.
+- **Data Validation with Zod:** All incoming requests are validated using Zod schemas to ensure data integrity.
+- **Password Hashing:** User passwords are securely hashed using bcrypt before being stored in the database.
+
+### Frontend Features
+
+- **Token Storage:** Authentication tokens are stored in cookies for session persistence across pages.
+- **Virtualized Task List:** The task list is virtualized for performance optimization, especially when displaying large datasets.
+- **Infinite Scroll:** Tasks load dynamically as the user scrolls down, reducing the need for pagination.
+- **React Query:** Used for efficient data fetching, caching, and network state management.
+- **Tailwind CSS:** Tailwind is used for component styling to quickly design responsive and visually appealing UI elements.
